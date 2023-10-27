@@ -7,14 +7,14 @@ from crowdhuman_metric import CrowdHumanMetric
 # gt_path = '/home/rvl224/文件/PaperCode/SW-YOLOX-main/datasets/crowdhuman/annotation_val.odgt'
 dbName = 'human'
 
-def compute_APMRJI(gt_path, dt_path, metrics=['AP', 'MR', 'JI'], target_key='box', mode=0):
+def compute_APMRJI(gt_path, dt_path, metrics=['AP', 'MR', 'JI'], target_key='fbox', iou_thres=0.5, mode=0):
     CHM = CrowdHumanMetric(gtpath = gt_path,
                            dtpath = dt_path, 
                            metric = metrics, 
                            body_key = target_key, 
                            head_key = None,
-                           iou_thres = 0.4, 
-                           mode=mode)
+                           iou_thres = iou_thres, 
+                           mode = mode)
 
     print("Compare gtbbox and dtbbox...")
     CHM.compare()
@@ -50,7 +50,7 @@ if __name__ == "__main__":
                         required=True, 
                         help='path of json result file to load')
     parser.add_argument('--target_key', 
-                        default='box', 
+                        default='fbox', 
                         required=False)
     args = parser.parse_args()
     print(args)
